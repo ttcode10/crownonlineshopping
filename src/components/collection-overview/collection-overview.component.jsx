@@ -7,7 +7,6 @@ import { selectCollectionsForPreview, selectCollection } from './../../redux/sho
 import CollectionPreview from './../collection-preview/collection-preview.component'
 
 const CollectionOverview = ({collections, collection}) => {
-  console.log({collection});
   return(
     <div className='collection-overview'>
       {collections.map(({id, ...otherCollectionProps}) => (

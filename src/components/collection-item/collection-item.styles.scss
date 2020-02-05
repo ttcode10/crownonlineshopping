@@ -20,6 +20,11 @@
     position: absolute;
     top: 255px;
     display: none;
+
+    @media screen and (max-width: 800px) {
+      display: block;
+      opacity: unset;
+    }
   }
 
   &:hover {
@@ -47,6 +52,20 @@
 
     .price {
       width: 10%;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 45vw;
+
+    &:hover {
+      .image {
+        opacity: unset;
+      }
+
+      .custom-button {
+        opacity: unset;
+      }
     }
   }
 }

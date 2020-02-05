@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectCurrentUser } from './redux/user/user.selector';
 import { checkUserSessions } from './redux/user/user.action';
-// import { selectCollectionsForPreview } from './redux/shop/shop.selector';
 
 import './App.scss';
 import Header from './components/header/header.component';
@@ -15,36 +14,25 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import NoMatchPage from './pages/no-match/no-match.page';
 import CheckoutPage from './pages/checkout/checkout.component';
 
-
-
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    const { checkUserSessions } = this.props;
+const App = ({ checkUserSessions, currentUser }) => {
+  useEffect(() => {
     checkUserSessions();
-  }
+  }, [checkUserSessions]);
 
+  return (
+    <div className='app'>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route path='/shop' component={ShopPage} />
+        <Route exact path='/checkout' component={CheckoutPage} />
+        <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/' />) : <SignInAndSignUpPage />} />
+        <Route component={NoMatchPage} />
+      </Switch>
+    </div>
+  )
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    return (
-      <div className='app'>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : <SignInAndSignUpPage />} />
-          <Route component={NoMatchPage} />
-        </Switch>
-      </div>
-    )
-  }
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,

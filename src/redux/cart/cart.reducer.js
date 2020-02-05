@@ -16,17 +16,17 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     case CartActionTypes.ADD_ITEM:
       return {
         ...state,
-        cartItems: addItemToCart(state.cartItems, action.playload)
+        cartItems: addItemToCart(state.cartItems, action.payload)
       };
     case CartActionTypes.REMOVE_CART_ITEM:
       return {
         ...state,
-        cartItems: state.cartItems.filter(cartItem => (cartItem.id !== action.playload.id))
+        cartItems: state.cartItems.filter(cartItem => (cartItem.id !== action.payload.id))
       };
     case CartActionTypes.DECREASE_CART_ITEM:
       return {
         ...state,
-        cartItems: decreaseCartItem(state.cartItems, action.playload)
+        cartItems: decreaseCartItem(state.cartItems, action.payload)
       };
     case CartActionTypes.CLEAR_CART:
       return {
